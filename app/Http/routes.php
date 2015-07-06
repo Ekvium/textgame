@@ -18,6 +18,6 @@ Route::get('/setup', function() {
 });
 
 Route::get('/', function () {
-    $users = DB::select('select * from users where active = ?', [1]);
+    $users = DB::select('select * from users');
     return view('welcome');
 });
