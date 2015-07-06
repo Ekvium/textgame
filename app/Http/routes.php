@@ -11,6 +11,12 @@
 |
 */
 
+Route::get('/setup', function() {
+    Schema::create('users', function ($table) {
+        $table->increments('id');
+    });
+});
+
 Route::get('/', function () {
     $users = DB::select('select * from users where active = ?', [1]);
     return view('welcome');
