@@ -39,7 +39,7 @@ class CreateTables extends Migration
         }
 
         if(!Schema::hasTable('universe_permissions')) {
-            Schema::create('universe_rights', function (Blueprint $table) {
+            Schema::create('universe_permissions', function (Blueprint $table) {
                 $table->increments('id');
                 $table->integer('player');
                 $table->string('permission');
@@ -123,6 +123,7 @@ class CreateTables extends Migration
                 $table->increments('id');
                 $table->integer('universe');
                 $table->integer('creator');
+                $table->integer('parent');
                 $table->boolean('gmAccess')->default(true);
                 $table->integer('quest')->default(-1);
                 $table->text('shortDescription');
@@ -168,6 +169,10 @@ class CreateTables extends Migration
      */
     public function down()
     {
-        Schema::drop('users');
+        $tables = array('users', 'universes', 'universe_permissions', 'items', 'item_types', 'characters',
+            'factions', 'faction_belong', 'skills', 'skill_belong', 'locations', 'rooms', 'lobbies', 'character_data');
+        foreach($tables as $table) {
+            Schema::dropIfExists($table);
+        }
     }
 }
